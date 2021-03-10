@@ -12,23 +12,40 @@ resource "aws_sns_topic_subscription" "this" {
   topic_arn              = aws_sns_topic.this[0].arn
 }
 
-resource "aws_cloudwatch_metric_alarm" "this" {
-  count                  = var.enabled ? 1 : 0
-  alarm_name          = "account-billing-alarm-${lower(var.currency)}-${var.env}"
-  comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = var.evaluation_periods
-  metric_name         = "EstimatedCharges"
-  namespace           = "AWS/Billing"
-  period              = var.period
-  statistic           = "Maximum"
-  alarm_description   = "Billing alarm account ${var.aws_account_id} >= US$ ${var.monthly_billing_threshold}"
-  threshold           = var.monthly_billing_threshold
-  alarm_actions       = aws_sns_topic.this.arn
+resource "aws_budgets_budget" "this" {
+  count             = var.enabled ? 1 : 0
+  name              = "budget-${var.cost_filters_service}-${var.env}-${var.time_unit}"
+  budget_type       = "COST"
+  limit_amount      = var.limit_amount
+  limit_unit        = var.currency
+  time_period_start = var.time_period_start
+  time_period_end   = var.time_period_end
+  time_unit         = var.time_unit
 
-  dimensions = {
-    Currency      = var.currency
-    LinkedAccount = var.aws_account_id
+  cost_filters = {
+    Service = var.cost_filters_service
   }
 
-  tags = var.tags
+  notification {
+    comparison_operator       = "GREATER_THAN"
+    threshold                 = var.notification_threshold
+    threshold_type            = "PERCENTAGE"
+    notification_type         = "FORECASTED"
+    subscriber_sns_topic_arns = [aws_sns_topic.this[0].arn]
+  }
+
+  cost_types {
+
+    include_credit = var.include_credit
+    include_discount = var.include_discount
+    include_other_subscription = var.include_other_subscription
+    include_recurring = var.include_recurring
+    include_refund = var.include_refund
+    include_subscription = var.include_subscription
+    include_support = var.include_support
+    include_tax = var.include_tax
+    include_upfront = var.include_upfront
+    use_amortized = var.use_amortized
+    use_blended = var.use_blended
+  }
 }
