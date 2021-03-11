@@ -21,6 +21,7 @@ module "budget_alert" {
   limit_amount = "200"
   subscription_endpoint = "https://events.pagerduty.com/integration/${module.pagerduty_service_infra.service_integration_key}/enqueue"
   time_period_start = "2021-01-01_00:00"
+}
 ```
 
 ### Minimal setup usage with email address
@@ -33,6 +34,7 @@ module "budget_alert" {
   subscription_endpoint_protocol = "email"
   subscription_endpoint = "YourEmailAddress"
   time_period_start = "2021-01-01_00:00"
+}
 ```
 
 ## Requirements
