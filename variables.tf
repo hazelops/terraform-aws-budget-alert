@@ -7,9 +7,8 @@ variable "enabled" {
 variable "env" {}
 
 variable "aws_account_id" {
-  description = "AWS account id"
+  description = "The ID of the target AWS account for budget. Will use current user's account_id by default if omitted"
   type        = string
-  default     = ""
 }
 
 variable "subscription_endpoint" {
@@ -24,11 +23,11 @@ variable "endpoint_auto_confirms" {
 
 variable "subscription_endpoint_protocol" {
   default     = "https"
-  description = "Endpoint protocol for SNS topic subscription"
+  description = "Endpoint protocol for SNS topic subscription (https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic_subscription#protocol-support)"
 }
 
 variable "cost_filters_service" {
-  description = "Budget service cost filter, eg: Amazon Elastic Compute Cloud - Compute / Amazon Relational Database Service / Amazon Redshift / Amazon ElastiCache/ Amazon Elasticsearch Service"
+  description = "Budget service cost filter, like: Amazon Elastic Compute Cloud - Compute / Amazon Relational Database Service / Amazon Redshift / Amazon ElastiCache/ Amazon Elasticsearch Service. https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-what-is.html"
   type        = string
   default     = ""
 }
@@ -51,7 +50,7 @@ variable "currency" {
 }
 
 variable "time_period_start" {
-  description = "Time to start"
+  description = "Time to start. Use format: YYYY-MM-DD_HH:MM"
   type        = string
 }
 
@@ -68,7 +67,7 @@ variable "notification_threshold" {
 }
 
 variable "include_credit" {
-  description = ""
+  description = "Specifies whether to include credits in the cost budget"
   default = true
 }
 
@@ -78,46 +77,46 @@ variable "include_discount" {
 }
 
 variable "include_other_subscription" {
-  description = "Whether to include other subscription costs in the cost budget"
+  description = "Specifies whether to include other subscription costs in the cost budget"
   default = true
 }
 
 variable "include_recurring" {
-  description = "Whether to include recurring costs in the cost budget"
+  description = "Specifies whether to include recurring costs in the cost budget"
   default = true
 }
 
 variable "include_refund" {
-  description = "Whether to include refunds in the cost budget"
+  description = "Specifies whether to include refunds in the cost budget"
   default = true
 }
 
 variable "include_subscription" {
-  description = "Whether to include subscriptions in the cost budget"
+  description = "Specifies whether to include subscriptions in the cost budget"
   default = true
 }
 
 variable "include_support" {
-  description = "Whether to include support costs in the cost budget"
+  description = "Specifies whether to include support costs in the cost budget"
   default = true
 }
 
 variable "include_tax" {
-  description = "Whether to include tax in the cost budget"
+  description = "Specifies whether to include tax in the cost budget"
   default = true
 }
 
 variable "include_upfront" {
-  description = "Whether to include upfront costs in the cost budget"
+  description = "Specifies whether to include upfront costs in the cost budget"
   default = true
 }
 
 variable "use_amortized" {
-  description = "Whether a budget uses the amortized rate"
+  description = "Specifies whether a budget uses the amortized rate"
   default = false
 }
 
 variable "use_blended" {
-  description = "Whether to use blended costs in the cost budget"
+  description = "Specifies whether to use blended costs in the cost budget"
   default = false
 }
