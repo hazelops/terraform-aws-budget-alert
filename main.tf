@@ -5,7 +5,7 @@ resource "aws_sns_topic" "this" {
 }
 
 resource "aws_sns_topic_subscription" "this" {
-  count                  = var.enabled ? 1 : 0
+  count                  = var.enabled ? 1 : 0s
   endpoint               = var.subscription_endpoint
   endpoint_auto_confirms = var.endpoint_auto_confirms
   protocol               = var.subscription_endpoint_protocol
@@ -14,7 +14,7 @@ resource "aws_sns_topic_subscription" "this" {
 
 resource "aws_budgets_budget" "this" {
   count             = var.enabled ? 1 : 0
-  name              = "budget-${var.cost_filters_service}-${var.env}-${var.time_unit}"
+  name              = "budget-${var.cost_filters_service}-${var.env}-${provider.aws.region}-${var.time_unit}"
   budget_type       = "COST"
   limit_amount      = var.limit_amount
   limit_unit        = var.currency
