@@ -40,7 +40,7 @@ variable "time_unit" {
 
 variable "limit_amount" {
   description = "The amount of cost or usage being measured for a budget."
-  type        = string
+  type        = strings
 }
 
 variable "currency" {
